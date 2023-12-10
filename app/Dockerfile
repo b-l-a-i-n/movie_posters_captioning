@@ -1,4 +1,5 @@
-FROM python:3.9.7-slim-bullseye
+FROM python:3.10.13-slim-bullseye
+
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE 1

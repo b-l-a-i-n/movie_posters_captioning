@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.html import format_html
+
 
 
 # Create your models here.
@@ -8,6 +10,7 @@ class Users(models.Model):
     user_name = models.CharField(max_length=255)
     full_name = models.CharField(max_length=255)
     time_create = models.DateTimeField(auto_now_add=True)
+
 
     class Meta:
         verbose_name = 'User'
@@ -23,6 +26,11 @@ class UsersRequests(models.Model):
     response = models.CharField(max_length=1000)
     time_create = models.DateTimeField(auto_now_add=True)
 
+    def image_tag(self):
+        if self.image:
+            return format_html('<img src="{}" width="300" height="300" />', self.image.url)
+        return ""
+    
     class Meta:
         verbose_name = 'Users request'
         verbose_name_plural = 'Users requests'

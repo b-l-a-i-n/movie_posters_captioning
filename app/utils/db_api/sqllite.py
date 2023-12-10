@@ -25,7 +25,8 @@ async def add_request(filepath: str, response='None', message:Message = None, ca
     cursor = connection.cursor()
     cursor.execute('SELECT ID FROM BOT_USERS WHERE telegram_id={}'.format(telegram_id))
     user_id = cursor.fetchall()[0][0]
-    values = (user_id, filepath, response, datetime.now())
+    image_path = "photo/" + filepath.split("/")[-1]
+    values = (user_id, image_path, response, datetime.now())
     cursor.execute('INSERT INTO BOT_USERSREQUESTS (user_id, image, response, time_create) VALUES (?, ?, ?, ?)',
                    values)
 

@@ -5,6 +5,7 @@ import os
 import numpy as np
 from PIL import Image
 import torch
+from data.config import MEDIA_ROOT
 from PIL.ImageFilter import (
    BLUR, CONTOUR, DETAIL, EDGE_ENHANCE, EDGE_ENHANCE_MORE,
    EMBOSS, FIND_EDGES, SMOOTH, SMOOTH_MORE, SHARPEN
@@ -14,11 +15,11 @@ from PIL.ImageFilter import (
 async def save_image(message: Message):
     photo_info = await bot.get_file(message.photo[-1].file_id)
     photo = await bot.download_file(photo_info.file_path)
-    path = os.getcwd().replace('\\', '/') + '/dashboard'
-    media_root = f'/media/photo/photo_{message.photo[-1].file_id[10:-30]}.jpg'
+    path = os.getcwd().replace('\\', '/')
+    media_root = MEDIA_ROOT + f'photo/photo_{message.photo[-1].file_id[10:-30]}.jpg'
     src = path + media_root
-    with open(src, 'wb') as new_file:
-        new_file.write(photo.read())
+    with open(src, 'wb') as f:
+        f.write(photo.read())
     return src
 
 
@@ -35,7 +36,6 @@ async def process_image(image_path, augmentation = False):
     if i_image.mode != "RGB":
         i_image = i_image.convert(mode="RGB")
 
-    # model.feat
     # Augmentation if image
     if augmentation:
         i_image = distort_image(i_image)
@@ -53,7 +53,7 @@ async def process_image(image_path, augmentation = False):
 
 def distort_image(image: Image):
     # rotation
-    angle = np.randint(360)
+    angle = np.random.randint(360)
     image_dist = image.rotate(angle)
     # vertical flip
     image_dist = image_dist.transpose(Image.FLIP_TOP_BOTTOM)

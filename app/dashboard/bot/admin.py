@@ -10,7 +10,7 @@ class UsersAdmin(admin.ModelAdmin):
 
 
 class UsersRequestsAdmin(admin.ModelAdmin):
-    list_display = ('user', 'image', 'response', 'time_create')
+    list_display = ('user', 'image_tag', 'response', 'time_create')
     # list_display_links = ('user_id', 'response')
 
 
